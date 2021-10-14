@@ -39,7 +39,7 @@ class Attendance {
         if (error) {
           res.status(400).json(error)
         } else {
-          res.status(201).json(results)
+          res.status(201).json(attendance)
         }
       })
     }
@@ -66,6 +66,36 @@ class Attendance {
         res.status(400).json(error)
       } else {
         res.status(200).json(attendance)
+      }
+    })
+  }
+
+  update(id, values, res) {
+    if (values.date) {
+      values.date = moment(values.date, "DD/MM/YYYY").format(
+        "YYYY-MM-DD HH:MM:SS"
+      )
+    }
+
+    const sql = "UPDATE Attendances SET ? WHERE id=?"
+
+    connection.query(sql, [values, id], (error, results) => {
+      if (error) {
+        res.status(400).json(error)
+      } else {
+        res.status(200).json({ ...values, id })
+      }
+    })
+  }
+
+  delete(id, res) {
+    const sql = `DELETE FROM Attendances WHERE id=${id}`
+
+    connection.query(sql, (error, results) => {
+      if (error) {
+        res.status(400).json(error)
+      } else {
+        res.status(200).json("Deletado")
       }
     })
   }
