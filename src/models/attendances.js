@@ -1,5 +1,5 @@
 const moment = require("moment")
-const conexao = require("../database/connection")
+const connection = require("../database/connection")
 
 class Attendance {
   add(attendance, res) {
@@ -35,7 +35,7 @@ class Attendance {
 
       const sql = "INSERT INTO Attendances SET ?"
 
-      conexao.query(sql, datedAttendance, (error, results) => {
+      connection.query(sql, datedAttendance, (error, results) => {
         if (error) {
           res.status(400).json(error)
         } else {
@@ -43,6 +43,31 @@ class Attendance {
         }
       })
     }
+  }
+
+  list(res) {
+    const sql = "SELECT * FROM Attendances"
+
+    connection.query(sql, (error, results) => {
+      if (error) {
+        res.status(400).json(error)
+      } else {
+        res.status(200).json(results)
+      }
+    })
+  }
+
+  searchById(id, res) {
+    const sql = `SELECT * FROM Attendances WHERE id=${id}`
+
+    connection.query(sql, (error, results) => {
+      const attendance = results[0]
+      if (error) {
+        res.status(400).json(error)
+      } else {
+        res.status(200).json(attendance)
+      }
+    })
   }
 }
 
