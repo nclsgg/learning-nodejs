@@ -3,8 +3,6 @@ class Tables {
     this.connection = connection
 
     this.createAttendances()
-
-    console.log("Tabelas foram chamadas")
   }
 
   createAttendances() {

@@ -2,15 +2,16 @@ const customExpress = require("./config/customExpress")
 const connection = require("./database/connection")
 const Tables = require("./database/tables")
 
-connection.connect((error) => {
-  if (error) {
-    console.log(error)
+connection.connect((erro) => {
+  if (erro) {
+    console.log(erro)
   } else {
-    console.log("Conexão bem sucedida")
+    console.log("conectado com sucesso")
 
     Tables.init(connection)
+
     const app = customExpress()
 
-    app.listen(3000, () => console.log("servidor rodando na porta 3000"))
+    app.listen(3000, () => console.log("Servidor rodando na porta 3000"))
   }
 })
